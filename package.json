@@ -1,0 +1,10 @@
+{
+  "name": "chama-na-playlist-backend",
+  "version": "1.0.0",
+  "description": "ChamaNaPlaylist - Backend",
+  "main": "src/server.ts",
+  "repository": "git@github.com:Acquati/chama-na-playlist-backend.git",
+  "author": "Leandro Acquati <leandroacquati@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
