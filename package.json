@@ -8,7 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts"
+    "start": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
+    "test": "NODE_ENV=test jest --verbose --detectOpenHandles --runInBand"
   },
   "dependencies": {
     "express": "^4.17.1"
