@@ -19,4 +19,8 @@ export class PostgresUsersRepository implements IUsersRepository {
   async save(user: User): Promise<void> {
     this.users.push(user)
   }
+
+  async find(): Promise<User[]> {
+    return this.users
+  }
 }
