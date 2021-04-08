@@ -4,6 +4,12 @@ import { IUsersRepository } from '../IUsersRepository'
 export class PostgresUsersRepository implements IUsersRepository {
   private users: User[] = []
 
+  async findByUsername(username: string): Promise<User> {
+    const user = this.users.find(user => user.username === username)
+
+    return user
+  }
+
   async findByEmail(email: string): Promise<User> {
     const user = this.users.find(user => user.email === email)
 

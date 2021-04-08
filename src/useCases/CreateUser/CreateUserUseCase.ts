@@ -2,6 +2,7 @@ import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { ICreateUserRequestDTO } from './CreateUserDTO'
 import { User } from '../../entities/User'
 import { IMailProvider } from '../../providers/IMailProvider'
+import * as yup from 'yup'
 
 export class CreateUserUseCase {
   constructor(
@@ -10,10 +11,28 @@ export class CreateUserUseCase {
   ) { }
 
   async execute(data: ICreateUserRequestDTO) {
-    const userAlreadyExists = await this.usersRepository.findByEmail(data.email)
+    const schema = yup.object().shape({
+      username: yup.string().strict().min(3).max(100).matches(/^[-\w]*[a-zA-Z][-\w]*$/).required(),
+      email: yup.string().strict().min(5).max(254).email().required(),
+      password: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
+    })
 
-    if (userAlreadyExists) {
-      throw new Error('User already exists!')
+    try {
+      await schema.validate(data, { abortEarly: false })
+    } catch (error) {
+      throw new Error(error.errors.join(', '))
+    }
+
+    const usernameAlreadyInUse = await this.usersRepository.findByUsername(data.username)
+
+    if (usernameAlreadyInUse) {
+      throw new Error('Username already in use!')
+    }
+
+    const emailAlreadyInUse = await this.usersRepository.findByEmail(data.email)
+
+    if (emailAlreadyInUse) {
+      throw new Error('Email already in use!')
     }
 
     const user = new User(data)
@@ -22,7 +41,7 @@ export class CreateUserUseCase {
 
     // await this.mailProvider.sendMail({
     //   to: {
-    //     name: data.name,
+    //     name: data.username,
     //     email: data.email
     //   },
     //   from: {
