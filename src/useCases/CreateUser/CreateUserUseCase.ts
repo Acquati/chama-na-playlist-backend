@@ -3,6 +3,7 @@ import { ICreateUserRequestDTO } from './CreateUserDTO'
 import { User } from '../../entities/User'
 import { IMailProvider } from '../../providers/IMailProvider'
 import * as yup from 'yup'
+import bcrypt from 'bcryptjs'
 
 export class CreateUserUseCase {
   constructor(
@@ -34,6 +35,8 @@ export class CreateUserUseCase {
     if (emailAlreadyInUse) {
       throw new Error('Email already in use!')
     }
+
+    data.password = bcrypt.hashSync(data.password)
 
     const user = new User(data)
 
