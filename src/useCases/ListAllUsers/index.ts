@@ -1,11 +1,11 @@
-import { PostgresUsersRepository } from '../../repositories/implementations/PostgresUsersRepository'
+import { PostgresUserRepository } from '../../repositories/implementations/PostgresUserRepository'
 import { ListAllUsersUseCase } from './ListAllUsersUseCase'
 import { ListAllUsersController } from './ListAllUsersController'
 
-const postgresUsersRepository = new PostgresUsersRepository()
+const postgresUserRepository = new PostgresUserRepository()
 
 const listAllUsersUseCase = new ListAllUsersUseCase(
-  postgresUsersRepository
+  postgresUserRepository
 )
 
 const listAllUsersController = new ListAllUsersController(

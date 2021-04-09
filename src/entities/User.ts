@@ -1,17 +1,23 @@
-import { v4 as uuidv4 } from 'uuid'
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, Unique, PrimaryColumn } from 'typeorm'
 
+@Entity('user')
+@Unique(['id', 'username', 'email'])
 export class User {
-  public readonly id: string
+  @PrimaryColumn()
+  id: string
 
-  public username: string
-  public email: string
-  public password: string
+  @Column()
+  username: string
 
-  constructor(props: Omit<User, 'id'>, id?: string) {
-    Object.assign(this, props)
+  @Column()
+  email: string
 
-    if (!id) {
-      this.id = uuidv4()
-    }
-  }
+  @Column()
+  password: string
+
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
 }

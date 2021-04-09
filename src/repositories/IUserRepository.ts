@@ -1,8 +1,8 @@
 import { User } from '../entities/User'
 
-export interface IUsersRepository {
+export interface IUserRepository {
   findByUsername(email: string): Promise<User>
   findByEmail(email: string): Promise<User>
-  save(user: User): Promise<void>
-  find(): Promise<User[]>
+  createUser(user: User): Promise<void>
+  findAll(): Promise<User[]>
 }

@@ -1,13 +1,14 @@
-import { IUsersRepository } from '../../repositories/IUsersRepository'
+import { IUserRepository } from '../../repositories/IUserRepository'
 import { ICreateUserRequestDTO } from './CreateUserDTO'
 import { User } from '../../entities/User'
 import { IMailProvider } from '../../providers/IMailProvider'
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
+import { v4 as uuidv4 } from 'uuid'
 
 export class CreateUserUseCase {
   constructor(
-    private usersRepository: IUsersRepository,
+    private userRepository: IUserRepository,
     private mailProvider: IMailProvider
   ) { }
 
@@ -24,23 +25,30 @@ export class CreateUserUseCase {
       throw new Error(error.errors.join(', '))
     }
 
-    const usernameAlreadyInUse = await this.usersRepository.findByUsername(data.username)
+    const usernameAlreadyInUse = await this.userRepository.findByUsername(data.username)
 
     if (usernameAlreadyInUse) {
       throw new Error('Username already in use!')
     }
 
-    const emailAlreadyInUse = await this.usersRepository.findByEmail(data.email)
+    const emailAlreadyInUse = await this.userRepository.findByEmail(data.email)
 
     if (emailAlreadyInUse) {
       throw new Error('Email already in use!')
     }
 
-    data.password = bcrypt.hashSync(data.password)
+    const user = new User()
 
-    const user = new User(data)
+    user.id = uuidv4()
+    user.username = data.username
+    user.email = data.email
+    user.password = bcrypt.hashSync(data.password)
 
-    await this.usersRepository.save(user)
+    const date = new Date()
+    user.created_at = date
+    user.updated_at = date
+
+    await this.userRepository.createUser(user)
 
     // await this.mailProvider.sendMail({
     //   to: {

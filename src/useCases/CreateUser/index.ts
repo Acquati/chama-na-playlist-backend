@@ -1,13 +1,13 @@
-import { PostgresUsersRepository } from '../../repositories/implementations/PostgresUsersRepository'
+import { PostgresUserRepository } from '../../repositories/implementations/PostgresUserRepository'
 import { MailtrapMailProvider } from '../../providers/implementations/MailtrapMailProvider'
 import { CreateUserUseCase } from './CreateUserUseCase'
 import { CreateUserController } from './CreateUserController'
 
-const postgresUsersRepository = new PostgresUsersRepository()
+const postgresUserRepository = new PostgresUserRepository()
 const mailtrapMailProvider = new MailtrapMailProvider()
 
 const createUserUseCase = new CreateUserUseCase(
-  postgresUsersRepository,
+  postgresUserRepository,
   mailtrapMailProvider
 )
 

@@ -1,13 +1,13 @@
-import { IUsersRepository } from '../../repositories/IUsersRepository'
+import { IUserRepository } from '../../repositories/IUserRepository'
 
 export class ListAllUsersUseCase {
   constructor(
-    private usersRepository: IUsersRepository
+    private userRepository: IUserRepository
   ) { }
 
   async execute() {
     try {
-      const users = await this.usersRepository.find()
+      const users = await this.userRepository.findAll()
 
       return users
     } catch (error) {
