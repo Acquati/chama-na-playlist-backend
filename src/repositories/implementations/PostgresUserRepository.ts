@@ -24,4 +24,14 @@ export class PostgresUserRepository implements IUserRepository {
       select: ['id', 'username', 'email', 'created_at', 'updated_at']
     })
   }
+
+  async findById(id: string): Promise<User> {
+    const repository = getRepository(User)
+    return repository.findOne({ id })
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    const repository = getRepository(User)
+    repository.delete(id)
+  }
 }
