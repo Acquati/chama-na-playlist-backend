@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { createUserController } from '../useCases/CreateUser'
-import { listAllUsersController } from '../useCases/ListAllUsers'
+import { getAllUsersController } from '../useCases/GetAllUsers'
 import { updateUserController } from '../useCases/UpdateUser'
 import { deleteUserController } from '../useCases/DeleteUser'
 
@@ -15,7 +15,7 @@ router.post(
 router.get(
   '/',
   (request: Request, response: Response, _next: NextFunction) => {
-    return listAllUsersController.handle(request, response)
+    return getAllUsersController.handle(request, response)
   }
 )
 router.patch(

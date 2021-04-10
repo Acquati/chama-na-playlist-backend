@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
-import { ListAllUsersUseCase } from './ListAllUsersUseCase'
+import { GetAllUsersUseCase } from './GetAllUsersUseCase'
 
-export class ListAllUsersController {
+export class GetAllUsersController {
   constructor(
-    private listAllUsersUseCase: ListAllUsersUseCase
+    private getAllUsersUseCase: GetAllUsersUseCase
   ) { }
 
   async handle(_request: Request, response: Response): Promise<Response> {
     try {
-      const users = await this.listAllUsersUseCase.execute()
+      const users = await this.getAllUsersUseCase.execute()
 
       return response.status(200).send({ message: users })
     } catch (error) {

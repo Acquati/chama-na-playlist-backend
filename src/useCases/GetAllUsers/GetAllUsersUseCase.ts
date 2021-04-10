@@ -1,6 +1,6 @@
 import { IUserRepository } from '../../repositories/IUserRepository'
 
-export class ListAllUsersUseCase {
+export class GetAllUsersUseCase {
   constructor(
     private userRepository: IUserRepository
   ) { }
