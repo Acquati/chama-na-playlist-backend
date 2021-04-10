@@ -1,4 +1,5 @@
 import { User } from '../entities/User'
+import { IUpdateUserRequestDTO } from '../useCases/UpdateUser/UpdateUserDTO';
 
 export interface IUserRepository {
   findByUsername(username: string): Promise<User>
@@ -7,4 +8,5 @@ export interface IUserRepository {
   findAll(): Promise<User[]>
   findById(id: string): Promise<User>
   deleteUser(id: string): Promise<void>
+  updateUser(data: IUpdateUserRequestDTO): Promise<void>
 }

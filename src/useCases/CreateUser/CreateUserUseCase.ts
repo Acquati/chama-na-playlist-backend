@@ -26,25 +26,21 @@ export class CreateUserUseCase {
     }
 
     const usernameAlreadyInUse = await this.userRepository.findByUsername(data.username)
-
     if (usernameAlreadyInUse) {
       throw new Error('Username already in use!')
     }
 
     const emailAlreadyInUse = await this.userRepository.findByEmail(data.email)
-
     if (emailAlreadyInUse) {
       throw new Error('Email already in use!')
     }
 
     const user = new User()
-
+    const date = new Date()
     user.id = uuidv4()
     user.username = data.username
     user.email = data.email
     user.password = bcrypt.hashSync(data.password)
-
-    const date = new Date()
     user.created_at = date
     user.updated_at = date
 
