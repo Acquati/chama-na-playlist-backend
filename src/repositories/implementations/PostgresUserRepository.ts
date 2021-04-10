@@ -4,36 +4,40 @@ import { IUpdateUserRequestDTO } from '../../useCases/UpdateUser/UpdateUserDTO'
 import { IUserRepository } from '../IUserRepository'
 
 export class PostgresUserRepository implements IUserRepository {
+  private readonly allowedData: (keyof User)[] = ['id', 'username', 'email', 'created_at', 'updated_at']
+
+  async findById(id: string): Promise<User> {
+    const repository = getRepository(User)
+    return repository.findOne(
+      id,
+      { select: this.allowedData }
+    )
+  }
+
   async findByUsername(username: string): Promise<User> {
     const repository = getRepository(User)
-    return repository.findOne({ username })
+    return repository.findOne(
+      { username },
+      { select: this.allowedData }
+    )
   }
 
   async findByEmail(email: string): Promise<User> {
     const repository = getRepository(User)
-    return repository.findOne({ email })
+    return repository.findOne(
+      { email },
+      { select: this.allowedData }
+    )
+  }
+
+  async findAll(): Promise<User[]> {
+    const repository = getRepository(User)
+    return repository.find({ select: this.allowedData })
   }
 
   async createUser(user: User): Promise<void> {
     const repository = getRepository(User)
     repository.save(user)
-  }
-
-  async findAll(): Promise<User[]> {
-    const repository = getRepository(User)
-    return repository.find({
-      select: ['id', 'username', 'email', 'created_at', 'updated_at']
-    })
-  }
-
-  async findById(id: string): Promise<User> {
-    const repository = getRepository(User)
-    return repository.findOne(id)
-  }
-
-  async deleteUser(id: string): Promise<void> {
-    const repository = getRepository(User)
-    repository.delete(id)
   }
 
   async updateUser(data: IUpdateUserRequestDTO): Promise<void> {
@@ -45,5 +49,10 @@ export class PostgresUserRepository implements IUserRepository {
     user.updated_at = data.updated_at
 
     repository.save(user)
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    const repository = getRepository(User)
+    repository.delete(id)
   }
 }
