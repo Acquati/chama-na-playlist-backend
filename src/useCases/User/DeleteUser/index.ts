@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from '../../repositories/implementations/PostgresUserRepository'
+import { PostgresUserRepository } from '../../../repositories/implementations/PostgresUserRepository'
 import { DeleteUserUseCase } from './DeleteUserUseCase'
 import { DeleteUserController } from './DeleteUserController'
 

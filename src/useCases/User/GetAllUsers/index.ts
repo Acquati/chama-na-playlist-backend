@@ -1,4 +1,4 @@
-import { PostgresUserRepository } from '../../repositories/implementations/PostgresUserRepository'
+import { PostgresUserRepository } from '../../../repositories/implementations/PostgresUserRepository'
 import { GetAllUsersUseCase } from './GetAllUsersUseCase'
 import { GetAllUsersController } from './GetAllUsersController'
 

@@ -1,4 +1,4 @@
-import { IUserRepository } from '../../repositories/IUserRepository'
+import { IUserRepository } from '../../../repositories/IUserRepository'
 import { IGetUserRequestDTO } from './GetUserDTO'
 import * as yup from 'yup'
 

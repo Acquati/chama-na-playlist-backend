@@ -1,4 +1,4 @@
-import { IUserRepository } from '../../repositories/IUserRepository'
+import { IUserRepository } from '../../../repositories/IUserRepository'
 
 export class GetAllUsersUseCase {
   constructor(

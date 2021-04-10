@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import { createUserController } from '../useCases/CreateUser'
-import { getAllUsersController } from '../useCases/GetAllUsers'
-import { updateUserController } from '../useCases/UpdateUser'
-import { deleteUserController } from '../useCases/DeleteUser'
-import { getUserController } from '../useCases/GetUser'
+import { createUserController } from '../useCases/User/CreateUser'
+import { getAllUsersController } from '../useCases/User/GetAllUsers'
+import { updateUserController } from '../useCases/User/UpdateUser'
+import { deleteUserController } from '../useCases/User/DeleteUser'
+import { getUserController } from '../useCases/User/GetUser'
 
 const router = Router()
 

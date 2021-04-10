@@ -1,5 +1,5 @@
 import { User } from '../entities/User'
-import { IUpdateUserRequestDTO } from '../useCases/UpdateUser/UpdateUserDTO';
+import { IUpdateUserRequestDTO } from '../useCases/User/UpdateUser/UpdateUserDTO';
 
 export interface IUserRepository {
   findByUsername(username: string): Promise<User>
