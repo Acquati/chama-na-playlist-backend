@@ -23,12 +23,8 @@ export class GetUserUseCase {
       throw new Error('User does not exist!')
     }
 
-    try {
-      const user = await this.userRepository.findById(data.id)
+    const user = await this.userRepository.findById(data.id)
 
-      return user
-    } catch (error) {
-      throw new Error(error)
-    }
+    return user
   }
 }

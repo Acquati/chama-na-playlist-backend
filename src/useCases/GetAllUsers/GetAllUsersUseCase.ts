@@ -6,12 +6,8 @@ export class GetAllUsersUseCase {
   ) { }
 
   async execute() {
-    try {
-      const users = await this.userRepository.findAll()
+    const users = await this.userRepository.findAll()
 
-      return users
-    } catch (error) {
-      throw new Error(error)
-    }
+    return users
   }
 }
