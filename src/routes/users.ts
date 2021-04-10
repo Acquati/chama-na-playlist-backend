@@ -3,6 +3,7 @@ import { createUserController } from '../useCases/CreateUser'
 import { getAllUsersController } from '../useCases/GetAllUsers'
 import { updateUserController } from '../useCases/UpdateUser'
 import { deleteUserController } from '../useCases/DeleteUser'
+import { getUserController } from '../useCases/GetUser'
 
 const router = Router()
 
@@ -22,6 +23,12 @@ router.patch(
   '/:id',
   (request: Request, response: Response, _next: NextFunction) => {
     return updateUserController.handle(request, response)
+  }
+)
+router.get(
+  '/:id',
+  (request: Request, response: Response, _next: NextFunction) => {
+    return getUserController.handle(request, response)
   }
 )
 router.delete(
