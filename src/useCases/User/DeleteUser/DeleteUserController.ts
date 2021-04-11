@@ -14,7 +14,7 @@ export class DeleteUserController {
         id
       })
 
-      return response.status(200).send({
+      return response.status(200).json({
         message: 'User deleted successfully.'
       })
     } catch (error) {

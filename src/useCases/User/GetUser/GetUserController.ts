@@ -14,7 +14,9 @@ export class GetUserController {
         id
       })
 
-      return response.status(200).send({ message: user })
+      return response.status(200).json({
+        message: user
+      })
     } catch (error) {
       return response.status(400).json({
         message: error.message || 'Unexpected error.'

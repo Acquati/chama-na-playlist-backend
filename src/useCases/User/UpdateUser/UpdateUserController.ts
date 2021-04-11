@@ -17,7 +17,7 @@ export class UpdateUserController {
         email
       })
 
-      return response.status(200).send({
+      return response.status(200).json({
         message: 'User updated successfully.'
       })
     } catch (error) {
