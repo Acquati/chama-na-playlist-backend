@@ -4,6 +4,7 @@ import { IUpdateUserRequestDTO } from '../useCases/User/UpdateUser/UpdateUserDTO
 export interface IUserRepository {
   findByUsername(username: string): Promise<User>
   findByEmail(email: string): Promise<User>
+  findByEmailGetPassword(email: string): Promise<User>
   createUser(user: User): Promise<void>
   findAll(): Promise<User[]>
   findById(id: string): Promise<User>

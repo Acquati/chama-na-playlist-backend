@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { DeleteUserUseCase } from './DeleteUserUseCase'
 
 export class DeleteUserController {
@@ -6,7 +6,7 @@ export class DeleteUserController {
     private deleteUserUseCase: DeleteUserUseCase
   ) { }
 
-  async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
     const id = request.params.id
 
     try {

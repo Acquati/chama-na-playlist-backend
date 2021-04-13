@@ -30,6 +30,13 @@ export class PostgresUserRepository implements IUserRepository {
     )
   }
 
+  async findByEmailGetPassword(email: string): Promise<User> {
+    const repository = getRepository(User)
+    return repository.findOne(
+      { email }
+    )
+  }
+
   async findAll(): Promise<User[]> {
     const repository = getRepository(User)
     return repository.find({ select: this.allowedData })

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { UpdateUserUseCase } from './UpdateUserUseCase'
 
 export class UpdateUserController {
@@ -6,7 +6,7 @@ export class UpdateUserController {
     private updateUserUseCase: UpdateUserUseCase
   ) { }
 
-  async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
     const id = request.params.id
     const { username, email } = request.body
 

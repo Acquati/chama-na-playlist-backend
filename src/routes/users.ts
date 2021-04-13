@@ -9,32 +9,32 @@ const router = Router()
 
 router.post(
   '/',
-  (request: Request, response: Response, _next: NextFunction) => {
-    return createUserController.handle(request, response)
+  (request: Request, response: Response, next: NextFunction) => {
+    return createUserController.handle(request, response, next)
   }
 )
 router.get(
   '/',
-  (request: Request, response: Response, _next: NextFunction) => {
-    return getAllUsersController.handle(request, response)
+  (request: Request, response: Response, next: NextFunction) => {
+    return getAllUsersController.handle(request, response, next)
   }
 )
 router.patch(
   '/:id',
-  (request: Request, response: Response, _next: NextFunction) => {
-    return updateUserController.handle(request, response)
+  (request: Request, response: Response, next: NextFunction) => {
+    return updateUserController.handle(request, response, next)
   }
 )
 router.get(
   '/:id',
-  (request: Request, response: Response, _next: NextFunction) => {
-    return getUserController.handle(request, response)
+  (request: Request, response: Response, next: NextFunction) => {
+    return getUserController.handle(request, response, next)
   }
 )
 router.delete(
   '/:id',
-  (request: Request, response: Response, _next: NextFunction) => {
-    return deleteUserController.handle(request, response)
+  (request: Request, response: Response, next: NextFunction) => {
+    return deleteUserController.handle(request, response, next)
   }
 )
 

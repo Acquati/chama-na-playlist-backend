@@ -1,21 +1,22 @@
 import { Request, Response, NextFunction } from 'express'
-import { GetUserUseCase } from './GetUserUseCase'
+import { AuthenticateUserUseCase } from './AuthenticateUserUseCase'
 
-export class GetUserController {
+export class AuthenticateUserController {
   constructor(
-    private getUserUseCase: GetUserUseCase
+    private authenticateUserUseCase: AuthenticateUserUseCase
   ) { }
 
   async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
-    const id = request.params.id
+    const { email, password } = request.body
 
     try {
-      const user = await this.getUserUseCase.execute({
-        id
+      const token = await this.authenticateUserUseCase.execute({
+        email,
+        password
       })
 
       return response.status(200).json({
-        message: user
+        token: token
       })
     } catch (error) {
       return response.status(400).json({

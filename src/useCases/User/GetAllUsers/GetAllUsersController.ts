@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { GetAllUsersUseCase } from './GetAllUsersUseCase'
 
 export class GetAllUsersController {
@@ -6,7 +6,7 @@ export class GetAllUsersController {
     private getAllUsersUseCase: GetAllUsersUseCase
   ) { }
 
-  async handle(_request: Request, response: Response): Promise<Response> {
+  async handle(_request: Request, response: Response, _next: NextFunction): Promise<Response> {
     try {
       const users = await this.getAllUsersUseCase.execute()
 
