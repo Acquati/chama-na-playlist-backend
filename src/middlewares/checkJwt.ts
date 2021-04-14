@@ -9,12 +9,12 @@ export const checkJwt = (request: Request, response: Response, next: NextFunctio
     jwtPayload = jwt.verify(token, process.env.JWT_SECRET)
     response.locals.jwtPayload = jwtPayload
   } catch (error) {
-    return response.status(401).json({ message: 'Unauthorized access. ' + error })
+    return response.status(401).json({ message: 'Unauthorized access.' })
   }
 
-  const { userId, email } = jwtPayload
+  const { id, email } = jwtPayload
   const newToken = jwt.sign(
-    { userId, email },
+    { id, email },
     process.env.JWT_SECRET,
     { expiresIn: '16h' }
   )

@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express'
+import { checkJwt } from '../middlewares/checkJwt'
 import { createUserController } from '../useCases/User/CreateUser'
 import { getAllUsersController } from '../useCases/User/GetAllUsers'
 import { updateUserController } from '../useCases/User/UpdateUser'
@@ -21,6 +22,7 @@ router.get(
 )
 router.patch(
   '/:id',
+  [checkJwt],
   (request: Request, response: Response, next: NextFunction) => {
     return updateUserController.handle(request, response, next)
   }
@@ -33,6 +35,7 @@ router.get(
 )
 router.delete(
   '/:id',
+  [checkJwt],
   (request: Request, response: Response, next: NextFunction) => {
     return deleteUserController.handle(request, response, next)
   }

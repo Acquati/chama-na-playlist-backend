@@ -1,18 +1,18 @@
 import { IUserRepository } from '../../../repositories/IUserRepository'
-import { IAuthenticateUserRequestDTO } from './AuthenticateUserDTO'
+import { IUpdateUserPasswordRequestDTO } from './UpdateUserPasswordDTO'
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 
-export class AuthenticateUserUseCase {
+export class UpdateUserPasswordUseCase {
   constructor(
     private userRepository: IUserRepository
   ) { }
 
-  async execute(data: IAuthenticateUserRequestDTO) {
+  async execute(data: IUpdateUserPasswordRequestDTO) {
     const schema = yup.object().shape({
       email: yup.string().strict().min(5).max(254).email().required(),
-      password: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
+      oldPassword: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required(),
+      newPassword: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
     })
 
     try {
@@ -26,16 +26,14 @@ export class AuthenticateUserUseCase {
       throw new Error('No user registered with this email.')
     }
 
-    if (!bcrypt.compareSync(data.password, user.password)) {
+    if (!bcrypt.compareSync(data.oldPassword, user.password)) {
       throw new Error('Wrong password.')
     }
 
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '16h' }
-    )
+    data.newPassword = bcrypt.hashSync(data.newPassword)
+    const date = new Date()
+    data.updated_at = date
 
-    return token
+    await this.userRepository.updateUserPassword(data)
   }
 }

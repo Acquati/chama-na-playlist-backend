@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm'
 import { User } from '../../entities/User'
 import { IUpdateUserRequestDTO } from '../../useCases/User/UpdateUser/UpdateUserDTO'
+import { IUpdateUserPasswordRequestDTO } from '../../useCases/User/UpdateUserPassword/UpdateUserPasswordDTO'
 import { IUserRepository } from '../IUserRepository'
 
 export class PostgresUserRepository implements IUserRepository {
@@ -53,6 +54,17 @@ export class PostgresUserRepository implements IUserRepository {
 
     user.email = data.email
     user.username = data.username
+    user.updated_at = data.updated_at
+
+    repository.save(user)
+  }
+
+  async updateUserPassword(data: IUpdateUserPasswordRequestDTO): Promise<void> {
+    const repository = getRepository(User)
+    const email = data.email
+    let user = await repository.findOne({ email })
+
+    user.password = data.newPassword
     user.updated_at = data.updated_at
 
     repository.save(user)
