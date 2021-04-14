@@ -18,7 +18,7 @@ export class GetUserController {
         message: user
       })
     } catch (error) {
-      return response.status(400).json({
+      return response.status(error.statusCode || 500).json({
         message: error.message || 'Unexpected error.'
       })
     }

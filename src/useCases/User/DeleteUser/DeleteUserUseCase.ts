@@ -15,12 +15,18 @@ export class DeleteUserUseCase {
     try {
       await schema.validate(data, { abortEarly: false })
     } catch (error) {
-      throw new Error(error.errors.join(', '))
+      throw {
+        statusCode: 400,
+        message: error.errors.join(', ')
+      }
     }
 
     const userExists = await this.userRepository.findById(data.id)
     if (!userExists) {
-      throw new Error('User does not exist!')
+      throw {
+        statusCode: 400,
+        message: 'User does not exist!'
+      }
     }
 
     await this.userRepository.deleteUser(data.id)

@@ -18,16 +18,25 @@ export class AuthenticateUserUseCase {
     try {
       await schema.validate(data, { abortEarly: false })
     } catch (error) {
-      throw new Error(error.errors.join(', '))
+      throw {
+        statusCode: 400,
+        message: error.errors.join(', ')
+      }
     }
 
     const user = await this.userRepository.findByEmailGetPassword(data.email)
     if (!user) {
-      throw new Error('No user registered with this email.')
+      throw {
+        statusCode: 400,
+        message: 'No user registered with this email.'
+      }
     }
 
     if (!bcrypt.compareSync(data.password, user.password)) {
-      throw new Error('Wrong password.')
+      throw {
+        statusCode: 400,
+        message: 'Wrong password.'
+      }
     }
 
     const token = jwt.sign(

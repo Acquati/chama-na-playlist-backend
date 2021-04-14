@@ -22,17 +22,26 @@ export class CreateUserUseCase {
     try {
       await schema.validate(data, { abortEarly: false })
     } catch (error) {
-      throw new Error(error.errors.join(', '))
+      throw {
+        statusCode: 400,
+        message: error.errors.join(', ')
+      }
     }
 
     const usernameAlreadyInUse = await this.userRepository.findByUsername(data.username)
     if (usernameAlreadyInUse) {
-      throw new Error('Username already in use!')
+      throw {
+        statusCode: 400,
+        message: 'Username already in use!'
+      }
     }
 
     const emailAlreadyInUse = await this.userRepository.findByEmail(data.email)
     if (emailAlreadyInUse) {
-      throw new Error('Email already in use!')
+      throw {
+        statusCode: 400,
+        message: 'Email already in use!'
+      }
     }
 
     const user = new User()
