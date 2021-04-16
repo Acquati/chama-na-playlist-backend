@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { checkJwt } from '../middlewares/checkJwt'
 import { createUserController } from '../useCases/User/CreateUser'
-import { getAllUsersController } from '../useCases/User/GetAllUsers'
+import { getManyUsersController } from '../useCases/User/GetManyUsers'
 import { updateUserController } from '../useCases/User/UpdateUser'
 import { deleteUserController } from '../useCases/User/DeleteUser'
 import { getUserController } from '../useCases/User/GetUser'
@@ -17,7 +17,7 @@ router.post(
 router.get(
   '/',
   (request: Request, response: Response, next: NextFunction) => {
-    return getAllUsersController.handle(request, response, next)
+    return getManyUsersController.handle(request, response, next)
   }
 )
 router.patch(

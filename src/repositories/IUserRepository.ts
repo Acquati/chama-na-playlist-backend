@@ -7,7 +7,7 @@ export interface IUserRepository {
   findByEmail(email: string): Promise<User>
   findByEmailGetPassword(email: string): Promise<User>
   createUser(user: User): Promise<void>
-  findAll(): Promise<User[]>
+  findMany(): Promise<User[]>
   findById(id: string): Promise<User>
   deleteUser(id: string): Promise<void>
   updateUser(data: IUpdateUserRequestDTO): Promise<void>

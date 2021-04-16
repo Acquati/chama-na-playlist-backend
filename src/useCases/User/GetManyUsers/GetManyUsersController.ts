@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
-import { GetAllUsersUseCase } from './GetAllUsersUseCase'
+import { GetManyUsersUseCase } from './GetManyUsersUseCase'
 
-export class GetAllUsersController {
+export class GetManyUsersController {
   constructor(
-    private getAllUsersUseCase: GetAllUsersUseCase
+    private getManyUsersUseCase: GetManyUsersUseCase
   ) { }
 
   async handle(_request: Request, response: Response, _next: NextFunction): Promise<Response> {
     try {
-      const users = await this.getAllUsersUseCase.execute()
+      const users = await this.getManyUsersUseCase.execute()
 
       return response.status(200).json({
         message: users

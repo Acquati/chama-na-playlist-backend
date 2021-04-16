@@ -38,7 +38,7 @@ export class PostgresUserRepository implements IUserRepository {
     )
   }
 
-  async findAll(): Promise<User[]> {
+  async findMany(): Promise<User[]> {
     const repository = getRepository(User)
     return repository.find({ select: this.allowedData })
   }
