@@ -6,7 +6,7 @@ export const checkJwt = (request: Request, response: Response, next: NextFunctio
   const token = request.headers['x-access-token']
 
   if (!token) {
-    return response.status(401).json({ message: 'No token provided.' })
+    return response.status(401).json({ message: 'No access token provided.' })
   }
 
   let jwtPayload: string | object
@@ -15,7 +15,7 @@ export const checkJwt = (request: Request, response: Response, next: NextFunctio
     jwtPayload = jwt.verify(token as string, process.env.JWT_SECRET)
     response.locals.jwtPayload = jwtPayload
   } catch (error) {
-    return response.status(401).json({ message: 'Unauthorized access.' })
+    return response.status(403).json({ message: 'Unauthorized access token.' })
   }
 
   const { id, email } = jwtPayload as IJwtPayload
