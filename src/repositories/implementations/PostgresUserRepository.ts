@@ -7,11 +7,23 @@ import { IUserRepository } from '../IUserRepository'
 export class PostgresUserRepository implements IUserRepository {
   private readonly allowedData: (keyof User)[] = ['id', 'username', 'email', 'created_at', 'updated_at']
 
+  async findMany(): Promise<User[]> {
+    const repository = getRepository(User)
+    return repository.find({ select: this.allowedData })
+  }
+
   async findById(id: string): Promise<User> {
     const repository = getRepository(User)
     return repository.findOne(
       id,
       { select: this.allowedData }
+    )
+  }
+
+  async findByIdWithPassword(id: string): Promise<User> {
+    const repository = getRepository(User)
+    return repository.findOne(
+      id
     )
   }
 
@@ -31,16 +43,11 @@ export class PostgresUserRepository implements IUserRepository {
     )
   }
 
-  async findByEmailGetPassword(email: string): Promise<User> {
+  async findByEmailWithPassword(email: string): Promise<User> {
     const repository = getRepository(User)
     return repository.findOne(
       { email }
     )
-  }
-
-  async findMany(): Promise<User[]> {
-    const repository = getRepository(User)
-    return repository.find({ select: this.allowedData })
   }
 
   async createUser(user: User): Promise<void> {
@@ -61,8 +68,8 @@ export class PostgresUserRepository implements IUserRepository {
 
   async updateUserPassword(data: IUpdateUserPasswordRequestDTO): Promise<void> {
     const repository = getRepository(User)
-    const email = data.email
-    let user = await repository.findOne({ email })
+    const id = data.id
+    let user = await repository.findOne(id)
 
     user.password = data.newPassword
     user.updated_at = data.updated_at

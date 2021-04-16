@@ -7,12 +7,12 @@ export class UpdateUserPasswordController {
   ) { }
 
   async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
-    const email = response.locals.jwtPayload.email
+    const id = response.locals.jwtPayload.id
     const { oldPassword, newPassword } = request.body
 
     try {
       await this.updateUserPasswordUseCase.execute({
-        email,
+        id,
         oldPassword,
         newPassword
       })

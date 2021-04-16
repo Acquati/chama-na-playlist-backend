@@ -10,7 +10,7 @@ export class UpdateUserPasswordUseCase {
 
   async execute(data: IUpdateUserPasswordRequestDTO) {
     const schema = yup.object().shape({
-      email: yup.string().strict().min(5).max(254).email().required(),
+      id: yup.string().strict().uuid().required(),
       oldPassword: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required(),
       newPassword: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
     })
@@ -24,11 +24,11 @@ export class UpdateUserPasswordUseCase {
       }
     }
 
-    const user = await this.userRepository.findByEmailGetPassword(data.email)
+    const user = await this.userRepository.findByIdWithPassword(data.id)
     if (!user) {
       throw {
         statusCode: 400,
-        message: 'No user registered with this email.'
+        message: 'No user registered with this id.'
       }
     }
 

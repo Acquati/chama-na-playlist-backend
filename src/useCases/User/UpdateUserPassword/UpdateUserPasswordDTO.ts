@@ -1,5 +1,5 @@
 export interface IUpdateUserPasswordRequestDTO {
-  email: string
+  id: string
   oldPassword: string
   newPassword: string
   updated_at?: Date

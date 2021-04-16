@@ -24,7 +24,7 @@ export class AuthenticateUserUseCase {
       }
     }
 
-    const user = await this.userRepository.findByEmailGetPassword(data.email)
+    const user = await this.userRepository.findByEmailWithPassword(data.email)
     if (!user) {
       throw {
         statusCode: 400,
