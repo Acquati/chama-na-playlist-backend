@@ -32,7 +32,7 @@ export class CreateUserUseCase {
     if (usernameAlreadyInUse) {
       throw {
         statusCode: 400,
-        message: 'Username already in use!'
+        message: 'Username already in use.'
       }
     }
 
@@ -40,7 +40,7 @@ export class CreateUserUseCase {
     if (emailAlreadyInUse) {
       throw {
         statusCode: 400,
-        message: 'Email already in use!'
+        message: 'Email already in use.'
       }
     }
 

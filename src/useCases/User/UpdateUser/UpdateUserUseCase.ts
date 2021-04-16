@@ -27,7 +27,7 @@ export class UpdateUserUseCase {
     if (!userExists) {
       throw {
         statusCode: 400,
-        message: 'User does not exist!'
+        message: 'User does not exist.'
       }
     }
 
@@ -35,7 +35,7 @@ export class UpdateUserUseCase {
     if (usernameAlreadyInUse) {
       throw {
         statusCode: 400,
-        message: 'Username already in use!'
+        message: 'Username already in use.'
       }
     }
 
@@ -43,7 +43,7 @@ export class UpdateUserUseCase {
     if (emailAlreadyInUse) {
       throw {
         statusCode: 400,
-        message: 'Email already in use!'
+        message: 'Email already in use.'
       }
     }
 

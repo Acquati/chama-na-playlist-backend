@@ -25,7 +25,7 @@ export class DeleteUserUseCase {
     if (!userExists) {
       throw {
         statusCode: 400,
-        message: 'User does not exist!'
+        message: 'User does not exist.'
       }
     }
 
