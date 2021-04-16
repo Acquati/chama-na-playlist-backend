@@ -6,8 +6,8 @@ export class DeleteUserController {
     private deleteUserUseCase: DeleteUserUseCase
   ) { }
 
-  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
-    const id = request.params.id
+  async handle(_request: Request, response: Response, _next: NextFunction): Promise<Response> {
+    const id = response.locals.jwtPayload.id
 
     try {
       await this.deleteUserUseCase.execute({

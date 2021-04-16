@@ -7,7 +7,7 @@ export class UpdateUserController {
   ) { }
 
   async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
-    const id = request.params.id
+    const id = response.locals.jwtPayload.id
     const { username, email } = request.body
 
     try {

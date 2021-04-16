@@ -21,7 +21,7 @@ router.get(
   }
 )
 router.patch(
-  '/:id',
+  '/',
   [checkJwt],
   (request: Request, response: Response, next: NextFunction) => {
     return updateUserController.handle(request, response, next)
@@ -34,7 +34,7 @@ router.get(
   }
 )
 router.delete(
-  '/:id',
+  '/',
   [checkJwt],
   (request: Request, response: Response, next: NextFunction) => {
     return deleteUserController.handle(request, response, next)
