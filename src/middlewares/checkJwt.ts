@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { IJwtPayload } from './IJwtPayload'
+
+interface IJwtPayload {
+  id: string
+}
 
 export const checkJwt = (request: Request, response: Response, next: NextFunction) => {
   const token = request.headers['x-access-token']
@@ -18,9 +21,9 @@ export const checkJwt = (request: Request, response: Response, next: NextFunctio
     return response.status(403).json({ message: 'Unauthorized access token.' })
   }
 
-  const { id, email } = jwtPayload as IJwtPayload
+  const { id } = jwtPayload as IJwtPayload
   const newToken = jwt.sign(
-    { id, email },
+    { id },
     process.env.JWT_SECRET,
     { expiresIn: '16h' }
   )

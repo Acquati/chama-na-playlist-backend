@@ -28,7 +28,7 @@ export class UpdateUserPasswordUseCase {
     if (!user) {
       throw {
         statusCode: 400,
-        message: 'No user registered with this id.'
+        message: 'User does not exist.'
       }
     }
 
