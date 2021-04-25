@@ -1,22 +1,20 @@
 import { Request, Response } from 'express'
-import { GetUserUseCase } from './GetUserUseCase'
+import { LogoutUserUseCase } from './LogoutUserUseCase'
 
-export class GetUserController {
+export class LogoutUserController {
   constructor(
-    private getUserUseCase: GetUserUseCase
+    private LogoutUserUseCase: LogoutUserUseCase
   ) { }
 
   async handle(request: Request, response: Response): Promise<Response> {
-    const id = request.params.id
+    const refreshToken = request.headers['x-refresh-token']
 
     try {
-      const user = await this.getUserUseCase.execute({
-        id
+      const data = await this.LogoutUserUseCase.execute({
+        refreshToken
       })
 
-      return response.status(200).json({
-        message: user
-      })
+      return response.status(204)
     } catch (error) {
       return response.status(error.statusCode || 500).json({
         message: error.message || 'Unexpected error.'

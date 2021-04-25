@@ -1,24 +1,23 @@
 import { Request, Response } from 'express'
-import { UpdateUserUseCase } from './UpdateUserUseCase'
+import { LoginUserUseCase } from './LoginUserUseCase'
 
-export class UpdateUserController {
+export class LoginUserController {
   constructor(
-    private updateUserUseCase: UpdateUserUseCase
+    private loginUserUseCase: LoginUserUseCase
   ) { }
 
   async handle(request: Request, response: Response): Promise<Response> {
-    const id = response.locals.jwtPayload.id
-    const { username, email } = request.body
+    const { email, password } = request.body
 
     try {
-      await this.updateUserUseCase.execute({
-        id,
-        username,
-        email
+      const data = await this.loginUserUseCase.execute({
+        email,
+        password
       })
 
       return response.status(200).json({
-        message: 'User updated successfully.'
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken
       })
     } catch (error) {
       return response.status(error.statusCode || 500).json({

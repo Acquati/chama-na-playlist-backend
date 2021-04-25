@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { CreateUserUseCase } from './CreateUserUseCase'
 
 export class CreateUserController {
@@ -6,7 +6,7 @@ export class CreateUserController {
     private createUserUseCase: CreateUserUseCase
   ) { }
 
-  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { username, email, password } = request.body
 
     try {

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { DeleteUserUseCase } from './DeleteUserUseCase'
 
 export class DeleteUserController {
@@ -6,7 +6,7 @@ export class DeleteUserController {
     private deleteUserUseCase: DeleteUserUseCase
   ) { }
 
-  async handle(_request: Request, response: Response, _next: NextFunction): Promise<Response> {
+  async handle(_request: Request, response: Response): Promise<Response> {
     const id = response.locals.jwtPayload.id
 
     try {

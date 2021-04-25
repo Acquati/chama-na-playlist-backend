@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { UpdateUserPasswordUseCase } from './UpdateUserPasswordUseCase'
 
 export class UpdateUserPasswordController {
@@ -6,7 +6,7 @@ export class UpdateUserPasswordController {
     private updateUserPasswordUseCase: UpdateUserPasswordUseCase
   ) { }
 
-  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
     const id = response.locals.jwtPayload.id
     const { oldPassword, newPassword } = request.body
 

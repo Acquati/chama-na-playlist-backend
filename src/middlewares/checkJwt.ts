@@ -1,34 +1,44 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
+import { PostgresTokenRepository } from '../repositories/implementations/PostgresTokenRepository'
+
+const tokenRepository = new PostgresTokenRepository()
 
 interface IJwtPayload {
   id: string
 }
 
-export const checkJwt = (request: Request, response: Response, next: NextFunction) => {
-  const token = request.headers['x-access-token']
+function checkJwt(request: Request, response: Response, next: NextFunction) {
+  const accessToken = request.headers['x-access-token']
+  const refreshToken = request.headers['x-refresh-token']
 
-  if (!token) {
+  if (!accessToken) {
     return response.status(401).json({ message: 'No access token provided.' })
+  }
+  if (!refreshToken) {
+    return response.status(401).json({ message: 'No refresh token provided.' })
+  }
+
+  if (!tokenRepository.findOne(refreshToken as string)) {
+    return response.status(403).json({ message: 'No refresh token found on database.' })
   }
 
   let jwtPayload: string | object
 
   try {
-    jwtPayload = jwt.verify(token as string, process.env.JWT_SECRET)
+    jwtPayload = jwt.verify(accessToken as string, process.env.ACCESS_TOKEN_SECRET)
     response.locals.jwtPayload = jwtPayload
   } catch (error) {
     return response.status(403).json({ message: 'Unauthorized access token.' })
   }
 
-  const { id } = jwtPayload as IJwtPayload
-  const newToken = jwt.sign(
-    { id },
-    process.env.JWT_SECRET,
-    { expiresIn: '16h' }
-  )
-
-  response.setHeader('x-access-token', newToken)
+  try {
+    jwt.verify(refreshToken as string, process.env.REFRESH_TOKEN_SECRET)
+  } catch (error) {
+    return response.status(403).json({ message: 'Unauthorized refresh token.' })
+  }
 
   next()
 }
+
+export { checkJwt }
