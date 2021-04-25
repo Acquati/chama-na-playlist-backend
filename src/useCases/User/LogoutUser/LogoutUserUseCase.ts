@@ -13,8 +13,7 @@ export class LogoutUserUseCase {
 
   async execute(data: ILogoutUserRequestDTO) {
     const schema = yup.object().shape({
-      email: yup.string().strict().min(5).max(254).email().required(),
-      password: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
+      refreshToken: yup.string().strict().required()
     })
 
     try {
