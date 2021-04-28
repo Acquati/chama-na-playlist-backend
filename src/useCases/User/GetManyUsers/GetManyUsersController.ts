@@ -6,9 +6,11 @@ export class GetManyUsersController {
     private getManyUsersUseCase: GetManyUsersUseCase
   ) { }
 
-  async handle(_request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
     try {
       const users = await this.getManyUsersUseCase.execute()
+
+      console.log(request.session)
 
       return response.status(200).json({
         message: users

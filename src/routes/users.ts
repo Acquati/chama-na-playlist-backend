@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express'
-import { checkJwt } from '../middlewares/checkJwt'
+import { checkLoggedIn } from '../middlewares/checkLoggedIn'
+import { checkLoggedOut } from '../middlewares/checkLoggedOut'
 import { createUserController } from '../useCases/User/CreateUser'
 import { getManyUsersController } from '../useCases/User/GetManyUsers'
 import { updateUserController } from '../useCases/User/UpdateUser'
@@ -10,6 +11,7 @@ const router = Router()
 
 router.post(
   '/',
+  [checkLoggedIn],
   (request: Request, response: Response) => {
     return createUserController.handle(request, response)
   }
@@ -22,7 +24,7 @@ router.get(
 )
 router.patch(
   '/',
-  [checkJwt],
+  [checkLoggedOut],
   (request: Request, response: Response) => {
     return updateUserController.handle(request, response)
   }
@@ -35,7 +37,7 @@ router.get(
 )
 router.delete(
   '/',
-  [checkJwt],
+  [checkLoggedOut],
   (request: Request, response: Response) => {
     return deleteUserController.handle(request, response)
   }

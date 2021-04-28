@@ -10,11 +10,23 @@ export class CreateUserController {
     const { username, email, password } = request.body
 
     try {
-      await this.createUserUseCase.execute({
+      const userId = await this.createUserUseCase.execute({
         username,
         email,
         password
       })
+
+      console.log(request.session)
+      request.session.userId = userId
+      // request.session.save(function (error) {
+      //   if (error) {
+      //     throw {
+      //       statusCode: 500,
+      //       message: error
+      //     }
+      //   }
+      // })
+      console.log(request.session)
 
       return response.status(201).json({
         message: 'User created successfully.'

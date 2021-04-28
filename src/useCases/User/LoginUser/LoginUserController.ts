@@ -10,14 +10,23 @@ export class LoginUserController {
     const { email, password } = request.body
 
     try {
-      const data = await this.loginUserUseCase.execute({
+      const userId = await this.loginUserUseCase.execute({
         email,
         password
       })
 
+      request.session.userId = userId
+      request.session.save(function (error) {
+        if (error) {
+          throw {
+            statusCode: 500,
+            message: error
+          }
+        }
+      })
+
       return response.status(200).json({
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken
+        message: 'User logged in successfully.'
       })
     } catch (error) {
       return response.status(error.statusCode || 500).json({

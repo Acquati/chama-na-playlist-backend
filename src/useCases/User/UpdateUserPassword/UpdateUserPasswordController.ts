@@ -7,7 +7,7 @@ export class UpdateUserPasswordController {
   ) { }
 
   async handle(request: Request, response: Response): Promise<Response> {
-    const id = response.locals.jwtPayload.id
+    const id = request.session.userId
     const { oldPassword, newPassword } = request.body
 
     try {

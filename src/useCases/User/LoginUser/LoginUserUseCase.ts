@@ -1,14 +1,10 @@
 import { IUserRepository } from '../../../repositories/IUserRepository'
-import { ITokenRepository } from '../../../repositories/ITokenRepository'
 import { ILoginUserRequestDTO } from './LoginUserDTO'
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-
 export class LoginUserUseCase {
   constructor(
-    private userRepository: IUserRepository,
-    private tokenRepository: ITokenRepository
+    private userRepository: IUserRepository
   ) { }
 
   async execute(data: ILoginUserRequestDTO) {
@@ -41,19 +37,6 @@ export class LoginUserUseCase {
       }
     }
 
-    const accessToken = jwt.sign(
-      { id: user.id },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '16h' }
-    )
-
-    const refreshToken = jwt.sign(
-      { id: user.id },
-      process.env.REFRESH_TOKEN_SECRET
-    )
-
-    this.tokenRepository.createToken(refreshToken)
-
-    return { accessToken, refreshToken }
+    return user.id
   }
 }

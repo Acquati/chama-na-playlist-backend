@@ -53,7 +53,7 @@ export class CreateUserUseCase {
     user.created_at = date
     user.updated_at = date
 
-    await this.userRepository.createUser(user)
+    // await this.userRepository.createUser(user)
 
     // await this.mailProvider.sendMail({
     //   to: {
@@ -65,7 +65,9 @@ export class CreateUserUseCase {
     //     email: 'equipe@meuapp.com'
     //   },
     //   subject: 'Seja bem-vindo à plataforma.',
-    //   body: '<p>Você já pode fazer login em nossa plataforma.</p>'
+    //   body: '<p>Você já pode fazer login em nossa plataforma.</p><p>Confirme o seu email cliclando no link abaixo para ativar a recuperação de senha.</p>'
     // })
+
+    return user.id
   }
 }
