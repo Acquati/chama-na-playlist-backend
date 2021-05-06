@@ -1,15 +1,14 @@
 import { IUserRepository } from '../../../repositories/IUserRepository'
-import { IAuthenticateUserRequestDTO } from './AuthenticateUserDTO'
+import { ILoginUserRequestDTO } from './LoginUserDTO'
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 
-export class AuthenticateUserUseCase {
+export class LoginUserUseCase {
   constructor(
     private userRepository: IUserRepository
   ) { }
 
-  async execute(data: IAuthenticateUserRequestDTO) {
+  async execute(data: ILoginUserRequestDTO) {
     const schema = yup.object().shape({
       email: yup.string().strict().min(5).max(254).email().required(),
       password: yup.string().strict().min(8).max(100).matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).required()
@@ -39,12 +38,6 @@ export class AuthenticateUserUseCase {
       }
     }
 
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '16h' }
-    )
-
-    return token
+    return user.id
   }
 }

@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm'
 import { User } from '../../entities/User'
 import { IUpdateUserRequestDTO } from '../../useCases/User/UpdateUser/UpdateUserDTO'
-import { IUpdateUserPasswordRequestDTO } from '../../useCases/User/UpdateUserPassword/UpdateUserPasswordDTO'
+import { IUpdateUserPasswordRequestDTO } from '../../useCases/Authentication/UpdateUserPassword/UpdateUserPasswordDTO'
 import { IUserRepository } from '../IUserRepository'
 
 export class PostgresUserRepository implements IUserRepository {

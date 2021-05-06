@@ -1,5 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express'
-import { checkJwt } from '../middlewares/checkJwt'
+import { Router, Request, Response } from 'express'
+import { checkLoggedIn } from '../middlewares/checkLoggedIn'
+import { checkLoggedOut } from '../middlewares/checkLoggedOut'
 import { createUserController } from '../useCases/User/CreateUser'
 import { getManyUsersController } from '../useCases/User/GetManyUsers'
 import { updateUserController } from '../useCases/User/UpdateUser'
@@ -10,34 +11,35 @@ const router = Router()
 
 router.post(
   '/',
-  (request: Request, response: Response, next: NextFunction) => {
-    return createUserController.handle(request, response, next)
+  [checkLoggedOut],
+  (request: Request, response: Response) => {
+    return createUserController.handle(request, response)
   }
 )
 router.get(
   '/',
-  (request: Request, response: Response, next: NextFunction) => {
-    return getManyUsersController.handle(request, response, next)
+  (request: Request, response: Response) => {
+    return getManyUsersController.handle(request, response)
   }
 )
 router.patch(
   '/',
-  [checkJwt],
-  (request: Request, response: Response, next: NextFunction) => {
-    return updateUserController.handle(request, response, next)
+  [checkLoggedIn],
+  (request: Request, response: Response) => {
+    return updateUserController.handle(request, response)
   }
 )
 router.get(
   '/:id',
-  (request: Request, response: Response, next: NextFunction) => {
-    return getUserController.handle(request, response, next)
+  (request: Request, response: Response) => {
+    return getUserController.handle(request, response)
   }
 )
 router.delete(
   '/',
-  [checkJwt],
-  (request: Request, response: Response, next: NextFunction) => {
-    return deleteUserController.handle(request, response, next)
+  [checkLoggedIn],
+  (request: Request, response: Response) => {
+    return deleteUserController.handle(request, response)
   }
 )
 

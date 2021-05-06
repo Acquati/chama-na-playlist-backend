@@ -1,22 +1,40 @@
-import { Router, Request, Response, NextFunction } from 'express'
-import { checkJwt } from '../middlewares/checkJwt'
-import { authenticateUserController } from '../useCases/User/AuthenticateUser'
-import { updateUserPasswordController } from '../useCases/User/UpdateUserPassword'
+import { Router, Request, Response } from 'express'
+import { checkLoggedIn } from '../middlewares/checkLoggedIn'
+import { checkLoggedOut } from '../middlewares/checkLoggedOut'
+import { loginUserController } from '../useCases/Authentication/LoginUser'
+import { logoutUserController } from '../useCases/Authentication/LogoutUser'
+import { updateUserPasswordController } from '../useCases/Authentication/UpdateUserPassword'
+import { getManySessionsController } from '../useCases/Authentication/GetManySessions'
 
 const router = Router()
 
 router.post(
   '/login',
-  (request: Request, response: Response, next: NextFunction) => {
-    return authenticateUserController.handle(request, response, next)
+  [checkLoggedOut],
+  (request: Request, response: Response) => {
+    return loginUserController.handle(request, response)
+  }
+)
+router.get(
+  '/logout',
+  [checkLoggedIn],
+  (request: Request, response: Response) => {
+    return logoutUserController.handle(request, response)
   }
 )
 router.patch(
   '/update-password',
-  [checkJwt],
-  (request: Request, response: Response, next: NextFunction) => {
-    return updateUserPasswordController.handle(request, response, next)
+  [checkLoggedIn],
+  (request: Request, response: Response) => {
+    return updateUserPasswordController.handle(request, response)
   }
 )
+router.get(
+  '/session',
+  (request: Request, response: Response) => {
+    return getManySessionsController.handle(request, response)
+  }
+)
+
 
 export { router }

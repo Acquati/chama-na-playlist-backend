@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { GetUserUseCase } from './GetUserUseCase'
 
 export class GetUserController {
@@ -6,7 +6,7 @@ export class GetUserController {
     private getUserUseCase: GetUserUseCase
   ) { }
 
-  async handle(request: Request, response: Response, _next: NextFunction): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
     const id = request.params.id
 
     try {
