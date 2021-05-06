@@ -2,6 +2,7 @@ import { IUserRepository } from '../../../repositories/IUserRepository'
 import { ILoginUserRequestDTO } from './LoginUserDTO'
 import * as yup from 'yup'
 import bcrypt from 'bcryptjs'
+
 export class LoginUserUseCase {
   constructor(
     private userRepository: IUserRepository

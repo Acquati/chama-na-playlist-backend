@@ -1,20 +1,21 @@
 import { Router, Request, Response } from 'express'
 import { checkLoggedIn } from '../middlewares/checkLoggedIn'
 import { checkLoggedOut } from '../middlewares/checkLoggedOut'
-import { loginUserController } from '../useCases/User/LoginUser'
-import { logoutUserController } from '../useCases/User/LogoutUser'
-import { updateUserPasswordController } from '../useCases/User/UpdateUserPassword'
+import { loginUserController } from '../useCases/Authentication/LoginUser'
+import { logoutUserController } from '../useCases/Authentication/LogoutUser'
+import { updateUserPasswordController } from '../useCases/Authentication/UpdateUserPassword'
+import { getManySessionsController } from '../useCases/Authentication/GetManySessions'
 
 const router = Router()
 
 router.post(
   '/login',
-  [checkLoggedIn],
+  [checkLoggedOut],
   (request: Request, response: Response) => {
     return loginUserController.handle(request, response)
   }
 )
-router.post(
+router.get(
   '/logout',
   [checkLoggedIn],
   (request: Request, response: Response) => {
@@ -23,10 +24,17 @@ router.post(
 )
 router.patch(
   '/update-password',
-  [checkLoggedOut],
+  [checkLoggedIn],
   (request: Request, response: Response) => {
     return updateUserPasswordController.handle(request, response)
   }
 )
+router.get(
+  '/session',
+  (request: Request, response: Response) => {
+    return getManySessionsController.handle(request, response)
+  }
+)
+
 
 export { router }

@@ -10,8 +10,6 @@ export class GetManyUsersController {
     try {
       const users = await this.getManyUsersUseCase.execute()
 
-      console.log(request.session)
-
       return response.status(200).json({
         message: users
       })

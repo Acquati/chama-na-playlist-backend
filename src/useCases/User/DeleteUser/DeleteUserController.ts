@@ -8,10 +8,20 @@ export class DeleteUserController {
 
   async handle(request: Request, response: Response): Promise<Response> {
     const id = request.session.userId
+    const { password } = request.body
 
     try {
       await this.deleteUserUseCase.execute({
-        id
+        id, password
+      })
+
+      request.session.destroy(function (error) {
+        if (error) {
+          throw {
+            statusCode: 500,
+            message: error
+          }
+        }
       })
 
       return response.status(200).json({

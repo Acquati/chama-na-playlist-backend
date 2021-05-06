@@ -53,7 +53,7 @@ export class CreateUserUseCase {
     user.created_at = date
     user.updated_at = date
 
-    // await this.userRepository.createUser(user)
+    await this.userRepository.createUser(user)
 
     // await this.mailProvider.sendMail({
     //   to: {

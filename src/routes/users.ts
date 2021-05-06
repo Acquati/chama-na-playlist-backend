@@ -11,7 +11,7 @@ const router = Router()
 
 router.post(
   '/',
-  [checkLoggedIn],
+  [checkLoggedOut],
   (request: Request, response: Response) => {
     return createUserController.handle(request, response)
   }
@@ -24,7 +24,7 @@ router.get(
 )
 router.patch(
   '/',
-  [checkLoggedOut],
+  [checkLoggedIn],
   (request: Request, response: Response) => {
     return updateUserController.handle(request, response)
   }
@@ -37,7 +37,7 @@ router.get(
 )
 router.delete(
   '/',
-  [checkLoggedOut],
+  [checkLoggedIn],
   (request: Request, response: Response) => {
     return deleteUserController.handle(request, response)
   }
